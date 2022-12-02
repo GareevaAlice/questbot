@@ -1,4 +1,5 @@
 import json
+import logging
 
 from aiogram import Router, Bot
 from aiogram.dispatcher.filters.command import Command
@@ -32,13 +33,17 @@ async def quest_create(message: Message, state: FSMContext, bot: Bot):
         message.document,
         destination=file_path
     )
-    xml_checker = XMLChecker(file_path)
-    if xml_checker.is_correct():
-        db_manager.save_quest()
+    schema_path = f'/app/default_schema.xml'
+    xml_checker = XMLChecker(schema_path)
+    try:
+        xml_checker.check(file_path)
+    except Exception as e:
+        logging.warning(e)
         await message.answer(
-            text=message.document.file_id,
+            text=temp_text['wrong_quest_xml'].format(error=str(e)),
         )
-    else:
-        await message.answer(
-            text=temp_text['wrong_quest_xml'],
-        )
+
+    db_manager.save_quest(message.from_user.id, message.document.file_id)
+    await message.answer(
+        text=message.document.file_id,
+    )
