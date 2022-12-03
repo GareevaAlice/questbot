@@ -1,5 +1,6 @@
 # questbot
 Телеграм-бот для создания и прохождения текстовых квестов
+[https://t.me/quest_chest_bot](https://t.me/quest_chest_bot)
 
 
 ## Настройка

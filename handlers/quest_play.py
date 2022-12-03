@@ -1,8 +1,7 @@
 import json
-import xmltodict
-import logging
 import traceback
 
+import xmltodict
 from aiogram import Router
 from aiogram.dispatcher.filters.command import Command
 from aiogram.dispatcher.fsm.context import FSMContext
@@ -53,7 +52,7 @@ async def quest_info(message: Message, state: FSMContext):
 
 
 @router.callback_query(UserState.playing_quest)
-async def playing_quest(callback: CallbackQuery, state: FSMContext):
+async def quest_play(callback: CallbackQuery, state: FSMContext):
     try:
         quest_data = await state.get_data()
         quest_id = quest_data['quest_id']
@@ -74,6 +73,8 @@ async def playing_quest(callback: CallbackQuery, state: FSMContext):
             reply_markup=inline_buttons(step.answers)
         )
         await callback.message.edit_reply_markup(reply_markup=None)
+        if len(step.answers) == 0:
+            await state.clear()
 
 
 @router.message(Command(commands=["quest_stop"]), UserState.playing_quest)

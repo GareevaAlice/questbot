@@ -27,7 +27,7 @@
                                     <xsd:element name="answers">
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="answer" maxOccurs="unbounded">
+                                                <xsd:element name="answer" minOccurs="0" maxOccurs="unbounded">
                                                     <xsd:complexType>
                                                         <xsd:sequence>
                                                             <xsd:element name="id" type="xsd:string"/>

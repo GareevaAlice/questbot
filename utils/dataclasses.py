@@ -16,7 +16,7 @@ class Answer:
 
 @dataclass
 class Step:
-    prev_answer_id: List[str]
+    prev_answer_id: str
     text: str
     answers: List[Answer]
 

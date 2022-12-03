@@ -5,9 +5,12 @@ class DBManager:
 
     def get_quest_xml(self, quest_id: str):
         # While we don't have DB
-        file_path = f"/tmp/{quest_id}.xml"
-        with open(file_path) as f:
-            return f.read()
+        try:
+            file_path = f"/tmp/{quest_id}.xml"
+            with open(file_path) as f:
+                return f.read()
+        except:
+            raise ValueError
 
     def save_quest(self, user_id: str, quest_id: str):
         pass
