@@ -41,9 +41,11 @@ async def quest_create(message: Message, state: FSMContext, bot: Bot):
         logging.warning(e)
         await message.answer(
             text=temp_text['wrong_quest_xml'].format(error=str(e)),
+            parse_mode="MarkdownV2"
         )
     else:
         db_manager.save_quest(message.from_user.id, message.document.file_id)
         await message.answer(
-            text=temp_text['create_quest'].format(quest_id=message.document.file_id),
+            text=temp_text['quest_create'].format(quest_id=message.document.file_id),
+            parse_mode="MarkdownV2"
         )

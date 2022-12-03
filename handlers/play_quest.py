@@ -44,7 +44,6 @@ async def quest_info(message: Message, state: FSMContext):
         )
         await state.set_state(UserState.playing_quest)
         await state.update_data(quest_id=message.text)
-        await message.edit_reply_markup(reply_markup=None)
 
 
 @router.callback_query(UserState.playing_quest)

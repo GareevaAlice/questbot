@@ -27,6 +27,7 @@ async def playing_quest_help(message: Message):
     await message.answer(
         text=f"{temp_text['playing_quest_help']}\n\n"
              f"{temp_text['playing_quest_commands']}",
+        parse_mode="MarkdownV2",
         reply_markup=ReplyKeyboardRemove()
     )
 
@@ -38,6 +39,7 @@ async def common_help(message: Message):
              f"{temp_text['common_commands']}\n"
              f"{temp_text['playing_quest_commands']}\n"
              f"{temp_text['creating_quest_commands']}",
+        parse_mode="MarkdownV2",
         reply_markup=ReplyKeyboardRemove()
     )
 
