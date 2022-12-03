@@ -1,6 +1,7 @@
 import json
 import xmltodict
 import logging
+import traceback
 
 from aiogram import Router
 from aiogram.dispatcher.filters.command import Command
@@ -63,6 +64,7 @@ async def playing_quest(callback: CallbackQuery, state: FSMContext):
         quest_runner = QuestRunner(quest)
         step: Step = quest_runner.get_step(prev_answer_id=callback.data)
     except ValueError:
+        traceback.print_exc()
         await state.clear()
         await callback.message.answer(
             text=temp_text['error'],

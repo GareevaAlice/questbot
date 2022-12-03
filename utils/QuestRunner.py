@@ -32,17 +32,19 @@ class QuestRunner:
         return info
 
     def get_step(self, prev_answer_id: str) -> Step:
-        for step in self.quest['steps']:
-            if step == 'step':
-                step = self.quest['steps']['step']
+        steps = self.quest['steps']['step']
+        if type(steps) is not list:
+            steps = [steps]
 
-            if prev_answer_id in set(step['prev_answer_ids']):
-                if prev_answer_id == 'value':
-                    prev_answer_id = step['prev_answer_ids']['prev_answer_id']
+        for step in steps:
+            prev_answer_ids = step['prev_answer_ids']['value']
+            if type(prev_answer_ids) is not list:
+                prev_answer_ids = [prev_answer_ids]
 
-                answers = step['answers']
-                if answers == 'answer':
-                    answers = [step['answers']['answer']]
+            if prev_answer_id in set(prev_answer_ids):
+                answers = step['answers']['answer']
+                if type(answers) is not list:
+                    answers = [answers]
 
                 return Step(prev_answer_id=prev_answer_id,
                             text=step['text'],
