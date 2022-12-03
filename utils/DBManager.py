@@ -4,7 +4,10 @@ class DBManager:
         return ["quest_id", "quest_id"]
 
     def get_quest_xml(self, quest_id: str):
-        pass
+        # While we don't have DB
+        file_path = f"/tmp/{quest_id}.xml"
+        with open(file_path) as f:
+            return f.read()
 
     def save_quest(self, user_id: str, quest_id: str):
         pass

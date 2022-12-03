@@ -1,4 +1,6 @@
 import json
+import xmltodict
+import logging
 
 from aiogram import Router
 from aiogram.dispatcher.filters.command import Command
@@ -6,6 +8,7 @@ from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 
 from keyboards.inline_buttons import inline_buttons
+from utils.DBManager import db_manager
 from utils.QuestRunner import QuestRunner, QuestInfo, Step, Answer
 from utils.UserState import UserState
 
@@ -27,7 +30,9 @@ async def ask_quest_id(message: Message, state: FSMContext):
 @router.message(UserState.getting_quest_info)
 async def quest_info(message: Message, state: FSMContext):
     try:
-        quest_runner = QuestRunner(quest_id=message.text)
+        xml = db_manager.get_quest_xml(message.text)
+        quest = xmltodict.parse(xml)
+        quest_runner = QuestRunner(quest)
     except ValueError:
         await state.clear()
         await message.answer(
@@ -51,7 +56,11 @@ async def quest_info(message: Message, state: FSMContext):
 async def playing_quest(callback: CallbackQuery, state: FSMContext):
     try:
         quest_data = await state.get_data()
-        quest_runner = QuestRunner(quest_id=quest_data['quest_id'])
+        quest_id = quest_data['quest_id']
+        xml = db_manager.get_quest_xml(quest_id)
+
+        quest = xmltodict.parse(xml)
+        quest_runner = QuestRunner(quest)
         step: Step = quest_runner.get_step(prev_answer_id=callback.data)
     except ValueError:
         await state.clear()
