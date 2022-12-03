@@ -33,7 +33,7 @@ async def quest_create(message: Message, state: FSMContext, bot: Bot):
         message.document,
         destination=file_path
     )
-    schema_path = f'/app/default_schema.xml'
+    schema_path = f'/app/default_schema.xsd'
     xml_checker = XMLChecker(schema_path)
     try:
         xml_checker.check(file_path)
@@ -42,8 +42,8 @@ async def quest_create(message: Message, state: FSMContext, bot: Bot):
         await message.answer(
             text=temp_text['wrong_quest_xml'].format(error=str(e)),
         )
-
-    db_manager.save_quest(message.from_user.id, message.document.file_id)
-    await message.answer(
-        text=message.document.file_id,
-    )
+    else:
+        db_manager.save_quest(message.from_user.id, message.document.file_id)
+        await message.answer(
+            text=temp_text['create_quest'].format(quest_id=message.document.file_id),
+        )

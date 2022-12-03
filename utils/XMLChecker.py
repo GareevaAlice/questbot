@@ -1,5 +1,5 @@
 from lxml import etree
-import logging
+
 
 class XMLChecker:
     def __init__(self, schema_path):
