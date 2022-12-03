@@ -1,0 +1,50 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="quest">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element name="info">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="summary" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="steps">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="step" minOccurs="1" maxOccurs="99999">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="prev_answer_ids">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="value" type="xsd:string"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="text" type="xsd:string"/>
+                                        <xsd:element name="answers">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="answer" maxOccurs="99999">
+                                                        <xsd:complexType>
+                                                            <xsd:sequence>
+                                                                <xsd:element name="id" type="xsd:string"/>
+                                                                <xsd:element name="text" type="xsd:string"/>
+                                                            </xsd:sequence>
+                                                        </xsd:complexType>
+                                                    </xsd:element>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+</xsd:schema>

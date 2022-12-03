@@ -10,7 +10,7 @@
   "ask_quest_id": "Введите id квеста.",
   "wrong_quest_id": "Вы ввели некорректный id квеста.",
   "ask_quest_xml": "Загрузите xml квеста.",
-  "wrong_quest_xml": "Вы ввели некорректный xml квеста.",
+  "wrong_quest_xml": "Вы ввели некорректный xml квеста. Возникла ошибка проверки: {error}",
   "quest_info": "Id: {id}\nНазвание: {name}\nОписание: {summary}",
   "quest_start": "Начать квест",
   "quest_stop": "Квест был завершен"
