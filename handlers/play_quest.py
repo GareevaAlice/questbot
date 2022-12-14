@@ -7,7 +7,6 @@ from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
 from handlers.menu import back_to_menu_button
-from keyboards.inline_buttons import Answer, inline_buttons
 from keyboards.reply_buttons import reply_buttons
 from utils.DBManager import db_manager
 from utils.Quest import Step
@@ -50,11 +49,8 @@ async def stop_quest(message: Message, state: FSMContext):
     data = await state.get_data()
     quest_id = data.get('quest_id', '')
     await state.clear()
-    await message_answer(
-        message,
-        text=temp_text['stop_quest'].format(quest_id=quest_id),
-        reply_markup=inline_buttons([Answer(id=f"quest_{quest_id}", text="О квесте"),
-                                     back_to_menu_button(onlyAnswer=True)]))
+    await message_answer(message,
+                         text=temp_text['stop_quest'].format(quest_id=quest_id))
 
 
 @router.message(UserState.playing_quest)
