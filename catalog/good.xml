@@ -1,0 +1,47 @@
+<quest>
+    <info>
+        <title>Название квеста...</title>
+        <summary>Описание квеста...</summary>
+    </info>
+    <steps>
+        <step id="start">
+            <text>Начальный шаг</text>
+            <answers>
+                <answer>
+                    <text>Пойти на первый шаг</text>
+                    <next_step_id>first_answer</next_step_id>
+                </answer>
+            </answers>
+        </step>
+        <step id="first_answer">
+            <text>Первый шаг</text>
+            <answers>
+                <answer>
+                    <text>Пойти на второй шаг</text>
+                    <next_step_id>second_answer</next_step_id>
+                </answer>
+                <answer>
+                    <text>Пойти на последний шаг</text>
+                    <next_step_id>end</next_step_id>
+                </answer>
+            </answers>
+        </step>
+        <step id="second_answer">
+            <text>Второй шаг</text>
+            <answers>
+                <answer>
+                    <text>Пойти на первый шаг</text>
+                    <next_step_id>first_answer</next_step_id>
+                </answer>
+                <answer>
+                    <text>Пойти на последний шаг</text>
+                    <next_step_id>end</next_step_id>
+                </answer>
+            </answers>
+        </step>
+        <step id="end">
+            <text>Последний шаг</text>
+            <answers></answers>
+        </step>
+    </steps>
+</quest>

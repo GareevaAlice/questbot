@@ -1,10 +1,12 @@
 from aiogram import Dispatcher
 
-from handlers import common, quest_play, quest_create, user
+from handlers import common, menu, create_quest, quest, quests_list, play_quest
 
 
 def setup(dp: Dispatcher):
-    dp.include_router(quest_play.router)
-    dp.include_router(quest_create.router)
-    dp.include_router(user.router)
+    dp.include_router(play_quest.router)
+    dp.include_router(quests_list.router)
+    dp.include_router(quest.router)
+    dp.include_router(create_quest.router)
+    dp.include_router(menu.router)
     dp.include_router(common.router)

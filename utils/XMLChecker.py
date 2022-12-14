@@ -1,5 +1,7 @@
 from lxml import etree
 
+schema_path = f'/app/default_schema.xsd'
+
 
 class XMLChecker:
     def __init__(self, schema_path):
@@ -9,3 +11,6 @@ class XMLChecker:
 
     def check(self, file_path):
         etree.parse(file_path, self.parser)
+
+
+xml_checker = XMLChecker(schema_path)

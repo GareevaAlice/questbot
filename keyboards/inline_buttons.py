@@ -1,8 +1,13 @@
+from dataclasses import dataclass
 from typing import List
 
 from aiogram.utils.keyboard import InlineKeyboardMarkup, InlineKeyboardButton
 
-from utils.QuestRunner import Answer
+
+@dataclass
+class Answer:
+    id: str
+    text: str
 
 
 def inline_buttons(answers: List[Answer]) -> InlineKeyboardMarkup:
