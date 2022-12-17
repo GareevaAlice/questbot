@@ -20,14 +20,10 @@ with open("message_templates.json", "r") as f:
     temp_text = json.load(f)
 
 
-def ask_quest_xml_text() -> str:
-    return temp_text['ask_quest_xml']
-
-
 async def ask_quest_xml(input, state: FSMContext):
     await state.clear()
     await create_answer(input,
-                        text=ask_quest_xml_text(),
+                        text=temp_text['ask_quest_xml'],
                         reply_markup=back_to_menu_button())
     await state.set_state(UserState.getting_quest_xml)
 
@@ -65,4 +61,6 @@ async def create_quest(message: Message, state: FSMContext, bot: Bot):
     else:
         await message_answer(message,
                              text=quest_text(quest_info),
-                             reply_markup=quest_buttons(quest_id, "my_quests_list"))
+                             reply_markup=quest_buttons(message.from_user.id,
+                                                        quest_id,
+                                                        "my_quests_list"))

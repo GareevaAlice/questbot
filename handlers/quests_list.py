@@ -1,5 +1,4 @@
 import json
-import logging
 from typing import List
 
 from aiogram import Router
@@ -19,14 +18,6 @@ with open("message_templates.json", "r") as f:
     temp_text = json.load(f)
 
 
-def my_quests_list_text() -> str:
-    return temp_text['my_quests_list']
-
-
-def quests_list_text() -> str:
-    return temp_text['quests_list']
-
-
 def quests_list_buttons(quest_ids: List[str]) -> InlineKeyboardMarkup:
     answers = []
     for quest_id in quest_ids:
@@ -41,7 +32,7 @@ async def my_quests_list(input, state: FSMContext, user_id: str):
     await state.clear()
     quest_ids = db_manager.get_user_quest_ids(user_id)
     await create_answer(input,
-                        text=my_quests_list_text(),
+                        text=temp_text['my_quests_list'],
                         reply_markup=quests_list_buttons(quest_ids))
     await state.update_data(list_type="my_quests_list")
 
@@ -50,14 +41,13 @@ async def quests_list(input, state: FSMContext):
     await state.clear()
     quest_ids = db_manager.get_catalog_quest_ids()
     await create_answer(input,
-                        text=quests_list_text(),
+                        text=temp_text['quests_list'],
                         reply_markup=quests_list_buttons(quest_ids))
     await state.update_data(list_type="quests_list")
 
 
 @router.message(Command(commands=["my_quests_list"]))
 async def my_quests_list_message(message: Message, state: FSMContext):
-    logging.info(message.from_user.id)
     await my_quests_list(message, state, user_id=message.from_user.id)
 
 

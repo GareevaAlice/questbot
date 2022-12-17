@@ -35,6 +35,13 @@ class DBManager:
             raise ValueError
         return self._users_db[user_id][quest_id].current_step
 
+    def can_continue(self, user_id: str, quest_id: str) -> bool:
+        return quest_id in self._users_db[user_id]
+
+    def delete_user_state(self, user_id: str, quest_id: str):
+        if quest_id in self._users_db[user_id]:
+            del self._users_db[user_id][quest_id]
+
     def save_quest(self, quest_path: str, user_id: str) -> Quest:
         quest = Quest(quest_path, user_id)
         self._quests_db[quest.quest_info.id] = quest

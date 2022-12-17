@@ -14,10 +14,6 @@ with open("message_templates.json", "r") as f:
     temp_text = json.load(f)
 
 
-def menu_text() -> str:
-    return temp_text['menu']
-
-
 def menu_buttons() -> InlineKeyboardMarkup:
     return inline_buttons(
         [Answer(id="create_quest", text="Создать новый квест"),
@@ -36,7 +32,7 @@ def back_to_menu_button(onlyAnswer: bool = False) -> InlineKeyboardMarkup:
 async def menu(input, state: FSMContext):
     await state.clear()
     await create_answer(input,
-                        text=menu_text(),
+                        text=temp_text['menu'],
                         reply_markup=menu_buttons())
 
 

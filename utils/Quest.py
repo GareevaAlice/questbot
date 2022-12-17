@@ -36,7 +36,7 @@ def get_quest_xml(quest_path: str):
 
 class Quest:
     quest_info: QuestInfo
-    begin_step: Step
+    start_step: Step
     steps_dict: Dict[str, Step]
 
     def __init__(self, quest_path: str, author_id: str):
@@ -56,7 +56,7 @@ class Quest:
         self.steps_dict = self._steps_dict()
         if "start" not in self.steps_dict:
             raise ValueError("Нет начального шага с id start")
-        self.begin_step = self.steps_dict["start"]
+        self.start_step = self.steps_dict["start"]
 
     def _steps_dict(self) -> Dict[str, Step]:
         steps = self.quest['steps']['step']

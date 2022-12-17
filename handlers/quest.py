@@ -26,11 +26,15 @@ def quest_text(quest_info: QuestInfo) -> str:
     )
 
 
-def quest_buttons(quest_id: str, list_type: str) -> InlineKeyboardMarkup:
-    return inline_buttons(
-        [Answer(id=f"start_quest_{quest_id}", text="Пройти квест"),
-         Answer(id=(list_type if list_type else "quests_list"), text="Вернуться к списку"), ]
-    )
+def quest_buttons(user_id: str, quest_id: str, list_type: str) -> InlineKeyboardMarkup:
+    answers = [Answer(id=f"start_quest_{quest_id}",
+                      text="Пройти квест")]
+    if db_manager.can_continue(user_id, quest_id):
+        answers.append(Answer(id=f"continue_quest_{quest_id}",
+                              text="Продолжить квест"))
+    answers.append(Answer(id=(list_type if list_type else "quests_list"),
+                          text="Вернуться к списку"))
+    return inline_buttons(answers)
 
 
 async def quest(input, state: FSMContext, quest_id: str):
@@ -46,7 +50,9 @@ async def quest(input, state: FSMContext, quest_id: str):
     else:
         await create_answer(input,
                             text=quest_text(quest_info),
-                            reply_markup=quest_buttons(quest_id, list_type))
+                            reply_markup=quest_buttons(input.from_user.id,
+                                                       quest_id,
+                                                       list_type))
 
 
 @router.message(Command(commands=["quest"]))
