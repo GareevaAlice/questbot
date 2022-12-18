@@ -25,6 +25,20 @@
                                                         <xsd:sequence>
                                                             <xsd:element name="text" type="xsd:string"/>
                                                             <xsd:element name="next_step_id" type="xsd:string"/>
+                                                             <xsd:element name="not_visited" minOccurs="0">
+                                                                <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                        <xsd:element name="id" type="xsd:string"/>
+                                                                    </xsd:sequence>
+                                                                </xsd:complexType>
+                                                            </xsd:element>
+                                                            <xsd:element name="visited" minOccurs="0">
+                                                                <xsd:complexType>
+                                                                    <xsd:sequence>
+                                                                        <xsd:element name="id" type="xsd:string"/>
+                                                                    </xsd:sequence>
+                                                                </xsd:complexType>
+                                                            </xsd:element>
                                                         </xsd:sequence>
                                                     </xsd:complexType>
                                                 </xsd:element>

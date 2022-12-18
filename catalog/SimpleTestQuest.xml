@@ -21,24 +21,31 @@
             <text>
 Вы находитесь в красной комнате.
 
-Перед собой вы замечаете синюю и зеленую дверь.
+Перед собой вы замечаете синюю и зеленую дверь. Зеленая дверь закрыта на ключ.
             </text>
             <answers>
                 <answer>
                     <text>Пройти в синюю дверь</text>
-                    <next_step_id>blue_room</next_step_id>
+                    <next_step_id>blue_room_with_key</next_step_id>
+                    <not_visited><id>take_green_key</id></not_visited>
                 </answer>
                 <answer>
-                    <text>Пройти в зеленую дверь</text>
+                    <text>Пройти в синюю дверь</text>
+                    <next_step_id>blue_room_without_key</next_step_id>
+                    <visited><id>take_green_key</id> </visited>
+                </answer>
+                <answer>
+                    <text>Использовать зеленый ключ - пройти в зеленую дверь</text>
                     <next_step_id>green_door</next_step_id>
+                    <visited><id>take_green_key</id></visited>
                 </answer>
             </answers>
         </step>
-        <step id="blue_room">
+        <step id="blue_room_with_key">
             <text>
-Вы находитесь в синей комнате.
+Вы находитесь в синей комнате. Сзади вас находится красная дверь.
 
-Перед собой вы замечаете красную и зеленую дверь.
+Перед собой вы замечаете лежащий на полу зеленый ключ.
             </text>
             <answers>
                 <answer>
@@ -46,13 +53,37 @@
                     <next_step_id>red_room</next_step_id>
                 </answer>
                 <answer>
-                    <text>Пройти в зеленую дверь</text>
-                    <next_step_id>green_door</next_step_id>
+                    <text>Взять ключ</text>
+                    <next_step_id>take_green_key</next_step_id>
+                </answer>
+            </answers>
+        </step>
+        <step id="take_green_key">
+            <text>
+Вы взяли зеленый ключ и положили его в карман.
+
+Вы всё ещё находитесь в синей комнате. Сзади вас находится красная дверь.
+            </text>
+            <answers>
+                <answer>
+                    <text>Пройти в красную дверь</text>
+                    <next_step_id>red_room</next_step_id>
+                </answer>
+            </answers>
+        </step>
+        <step id="blue_room_without_key">
+            <text>Вы находитесь в синей комнате. Сзади вас находится красная дверь.</text>
+            <answers>
+                <answer>
+                    <text>Пройти в красную дверь</text>
+                    <next_step_id>red_room</next_step_id>
                 </answer>
             </answers>
         </step>
         <step id="green_door">
             <text>
+Вы отпираете зеленую дверь зеленым ключом.
+
 Зеленая дверь оказывается выходом - вы выбираетесь из этого странного дома.
 
 Это последний шаг квеста.

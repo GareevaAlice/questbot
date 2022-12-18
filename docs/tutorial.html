@@ -31,10 +31,13 @@
     <li><b>&lt;steps&gt;</b> Обязательный тэг внутри <i>&lt;quest&gt;</i>. Внутри него описываются шаги квеста. В квесте должен быть хотя бы один шаг.</li>
     <li><b>&lt;step id="step_id"&gt;</b> Обязательные тэги внутри <i>&lt;steps&gt;</i>. Внутри них описываются отдельные шаги квеста. У каждого шага должен быть <i>step_id</i> - уникальный текст, по которому можно будет этот шаг найти. <b>Обязательно должен быть начальный шаг с <i>id="start"</i></b></li>
     <li><b>&lt;text&gt;</b> Обязательный тэг внутри <i>&lt;step&gt;</i>. Внутри него нужно написать текст отдельного шага.</li>
-    <li><b>&lt;answers&gt;</b> Обязательный тэг внутри <i>&lt;step&gt;</i>. Внутри него описываются варианты ответа пользователя на шаг. Советуем не делать слишком много ответов. <b>Для конечных шагов ответов не должно быть - либо не указываем тэг, либо не описываем ответы внутри него.</b></li>
-    <li><b>&lt;answer</b> Обязательные тэги внутри <i>&lt;answers&gt;</i>. Внутри них описываются отдельные ответы шага. </li>
+    <li><b>&lt;answers&gt;</b> Необязательный тэг внутри <i>&lt;step&gt;</i>. Внутри него описываются варианты ответа пользователя на шаг. Советуем не делать слишком много ответов. <b>Для конечных шагов ответов не должно быть - либо не указываем тэг, либо не описываем ответы внутри него.</b></li>
+    <li><b>&lt;answer&gt;</b> Необязательные тэги внутри <i>&lt;answers&gt;</i>. Внутри них описываются отдельные ответы шага. </li>
     <li><b>&lt;title&gt;</b> Обязательный тэг внутри <i>&lt;answer&gt;</i>. Внутри него нужно написать текст отдельного ответа. Советуем не делать слишком длинные ответы.</li>
     <li><b>&lt;next_step_id&gt;</b> Обязательный тэг внутри <i>&lt;answer&gt;</i>. Внутри него нужно написать <i>step_id</i> существующего шага - это будет шаг, на который перейдет пользователь, если выберет этот вариант ответа.</li>
+    <li><b>&lt;not_visited&gt;</b> Необязательный тэг внутри <i>&lt;answer&gt;</i>. Внутри него описываются <i>step_id</i> шагов, которые пользователь обязан был НЕ посетить, чтобы этот ответ был доступен. <b>Если для этого ответа не влияет то, какие шаги НЕ посетил пользователь - либо не указываем тэг, либо не описываем id внутри него.</b></li>
+    <li><b>&lt;visited&gt;</b> Необязательный тэг внутри <i>&lt;answer&gt;</i>. Внутри него описываются <i>step_id</i> шагов, которые пользователь обязан был посетить, чтобы этот ответ был доступен. <b>Если для этого ответа не влияет то, какие шаги посетил пользователь - либо не указываем тэг, либо не описываем id внутри него.</b></li>
+    <li><b>&lt;id&gt;</b> Необязательные тэги внутри <i>&lt;not_visited&gt;</i>, <i>&lt;visited&gt;</i>. Внутри них нужно написать <i>step_id</i>.</li>
 </ul>
 <h3>Общая схема</h3>
 <code>
@@ -51,6 +54,14 @@
                 &lt;answer&gt;
                     &lt;text&gt;Текcт ответа&lt;/text&gt;
                     &lt;next_step_id&gt;step_id&lt;/next_step_id&gt;
+                    &lt;not_visited&gt;
+                        &lt;id&gt;step_id&lt;/id&gt;
+                        ...
+                    &lt;/not_visited&gt;
+                    &lt;visited&gt;
+                        &lt;id&gt;step_id&lt;/id&gt;
+                        ...
+                    &lt;/visited&gt;
                 &lt;/answer&gt;
                 ...
             &lt;/answers&gt;
@@ -86,24 +97,31 @@
             &lt;text&gt;
 Вы находитесь в красной комнате.
 
-Перед собой вы замечаете синюю и зеленую дверь.
+Перед собой вы замечаете синюю и зеленую дверь. Зеленая дверь закрыта на ключ.
             &lt;/text&gt;
             &lt;answers&gt;
                 &lt;answer&gt;
                     &lt;text&gt;Пройти в синюю дверь&lt;/text&gt;
-                    &lt;next_step_id&gt;blue_room&lt;/next_step_id&gt;
+                    &lt;next_step_id&gt;blue_room_with_key&lt;/next_step_id&gt;
+                    &lt;not_visited&gt;&lt;id&gt;take_green_key&lt;/id&gt;&lt;/not_visited&gt;
                 &lt;/answer&gt;
                 &lt;answer&gt;
-                    &lt;text&gt;Пройти в зеленую дверь&lt;/text&gt;
+                    &lt;text&gt;Пройти в синюю дверь&lt;/text&gt;
+                    &lt;next_step_id&gt;blue_room_without_key&lt;/next_step_id&gt;
+                    &lt;visited&gt;&lt;id&gt;take_green_key&lt;/id&gt; &lt;/visited&gt;
+                &lt;/answer&gt;
+                &lt;answer&gt;
+                    &lt;text&gt;Использовать зеленый ключ - пройти в зеленую дверь&lt;/text&gt;
                     &lt;next_step_id&gt;green_door&lt;/next_step_id&gt;
+                    &lt;visited&gt;&lt;id&gt;take_green_key&lt;/id&gt;&lt;/visited&gt;
                 &lt;/answer&gt;
             &lt;/answers&gt;
         &lt;/step&gt;
-        &lt;step id="blue_room"&gt;
+        &lt;step id="blue_room_with_key"&gt;
             &lt;text&gt;
-Вы находитесь в синей комнате.
+Вы находитесь в синей комнате. Сзади вас находится красная дверь.
 
-Перед собой вы замечаете красную и зеленую дверь.
+Перед собой вы замечаете лежащий на полу зеленый ключ.
             &lt;/text&gt;
             &lt;answers&gt;
                 &lt;answer&gt;
@@ -111,13 +129,37 @@
                     &lt;next_step_id&gt;red_room&lt;/next_step_id&gt;
                 &lt;/answer&gt;
                 &lt;answer&gt;
-                    &lt;text&gt;Пройти в зеленую дверь&lt;/text&gt;
-                    &lt;next_step_id&gt;green_door&lt;/next_step_id&gt;
+                    &lt;text&gt;Взять ключ&lt;/text&gt;
+                    &lt;next_step_id&gt;take_green_key&lt;/next_step_id&gt;
+                &lt;/answer&gt;
+            &lt;/answers&gt;
+        &lt;/step&gt;
+        &lt;step id="take_green_key"&gt;
+            &lt;text&gt;
+Вы взяли зеленый ключ и положили его в карман.
+
+Вы всё ещё находитесь в синей комнате. Сзади вас находится красная дверь.
+            &lt;/text&gt;
+            &lt;answers&gt;
+                &lt;answer&gt;
+                    &lt;text&gt;Пройти в красную дверь&lt;/text&gt;
+                    &lt;next_step_id&gt;red_room&lt;/next_step_id&gt;
+                &lt;/answer&gt;
+            &lt;/answers&gt;
+        &lt;/step&gt;
+        &lt;step id="blue_room_without_key"&gt;
+            &lt;text&gt;Вы находитесь в синей комнате. Сзади вас находится красная дверь.&lt;/text&gt;
+            &lt;answers&gt;
+                &lt;answer&gt;
+                    &lt;text&gt;Пройти в красную дверь&lt;/text&gt;
+                    &lt;next_step_id&gt;red_room&lt;/next_step_id&gt;
                 &lt;/answer&gt;
             &lt;/answers&gt;
         &lt;/step&gt;
         &lt;step id="green_door"&gt;
             &lt;text&gt;
+Вы отпираете зеленую дверь зеленым ключом.
+
 Зеленая дверь оказывается выходом - вы выбираетесь из этого странного дома.
 
 Это последний шаг квеста.
