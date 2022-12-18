@@ -1,5 +1,5 @@
 from typing import List
-import logging
+
 from aiogram import Router
 from aiogram import html
 from aiogram.dispatcher.filters import Text
@@ -113,7 +113,7 @@ async def play_quest(message: Message, state: FSMContext):
                 return
         await message_answer(message,
                              text=temp_text['play_error'],
-                             reply_markup=await get_answers_buttons(play_state.current_step, state,
+                             reply_markup=await get_answers_buttons(play_state, state,
                                                                     message.from_user.id, quest_id))
     except ValueError:
         await state.clear()
