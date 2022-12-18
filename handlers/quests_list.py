@@ -1,4 +1,3 @@
-import json
 from typing import List
 
 from aiogram import Router
@@ -7,15 +6,13 @@ from aiogram.dispatcher.filters.command import Command
 from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup
 
+from handlers.common import temp_text
 from handlers.menu import back_to_menu_button
 from keyboards.inline_buttons import inline_buttons, Answer
 from utils.DBManager import db_manager
 from utils.create_answer import create_answer
 
 router = Router()
-
-with open("message_templates.json", "r") as f:
-    temp_text = json.load(f)
 
 
 def quests_list_buttons(quest_ids: List[str]) -> InlineKeyboardMarkup:

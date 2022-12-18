@@ -17,7 +17,7 @@
                             <xsd:complexType>
                                 <xsd:sequence>
                                     <xsd:element name="text" type="xsd:string"/>
-                                    <xsd:element name="answers">
+                                    <xsd:element name="answers" minOccurs="0">
                                         <xsd:complexType>
                                             <xsd:sequence>
                                                 <xsd:element name="answer" minOccurs="0" maxOccurs="unbounded">
@@ -32,7 +32,7 @@
                                         </xsd:complexType>
                                     </xsd:element>
                                 </xsd:sequence>
-                                <xsd:attribute name="id" type="xsd:string"/>
+                                <xsd:attribute name="id" type="xsd:string" use="required"/>
                             </xsd:complexType>
                         </xsd:element>
                     </xsd:sequence>

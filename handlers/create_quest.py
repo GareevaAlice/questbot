@@ -1,4 +1,3 @@
-import json
 import logging
 
 from aiogram import Router, Bot
@@ -7,6 +6,7 @@ from aiogram.dispatcher.filters.command import Command
 from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, ContentType, CallbackQuery
 
+from handlers.common import temp_text
 from handlers.menu import back_to_menu_button
 from handlers.quest import quest_text, quest_buttons
 from keyboards.inline_buttons import inline_buttons, Answer
@@ -15,9 +15,6 @@ from utils.UserState import UserState
 from utils.create_answer import message_answer, create_answer
 
 router = Router()
-
-with open("message_templates.json", "r") as f:
-    temp_text = json.load(f)
 
 
 async def ask_quest_xml(input, state: FSMContext):
@@ -53,7 +50,7 @@ async def create_quest(message: Message, state: FSMContext, bot: Bot):
         logging.warning(e)
         await message_answer(
             message,
-            text=temp_text['wrong_quest_xml'].format(error=html.quote(str(e))),
+            text=temp_text['quest_xml_error'].format(error=html.quote(str(e))),
             reply_markup=inline_buttons(
                 [Answer(id="create_quest", text="Попробовать ещё раз")]
             )

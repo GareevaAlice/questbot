@@ -1,11 +1,10 @@
-import json
-
 from aiogram import Router
 from aiogram import html
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardMarkup, ReplyKeyboardRemove
 
+from handlers.common import temp_text
 from handlers.menu import back_to_menu_button
 from keyboards.reply_buttons import reply_buttons
 from utils.DBManager import db_manager
@@ -14,9 +13,6 @@ from utils.UserState import UserState
 from utils.create_answer import message_answer
 
 router = Router()
-
-with open("message_templates.json", "r") as f:
-    temp_text = json.load(f)
 
 
 async def get_answers(step: Step, state: FSMContext, user_id: str,
@@ -56,7 +52,7 @@ async def first_step(callback: CallbackQuery, state: FSMContext, quest_id: str, 
         await state.update_data(quest_id=quest_id)
     except ValueError:
         await message_answer(callback.message,
-                             text=temp_text['wrong_quest_id'],
+                             text=temp_text['quest_id_error'],
                              reply_markup=back_to_menu_button())
 
 
@@ -99,5 +95,4 @@ async def play_quest(message: Message, state: FSMContext):
     except ValueError:
         await state.clear()
         await message_answer(message,
-                             text=temp_text['error'],
-                             reply_markup=back_to_menu_button())
+                             text=temp_text['step_error'])

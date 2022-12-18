@@ -1,11 +1,10 @@
-import json
-
 from aiogram import Router
 from aiogram import html
 from aiogram.dispatcher.filters import Command, CommandObject, Text
 from aiogram.dispatcher.fsm.context import FSMContext
 from aiogram.types import Message, InlineKeyboardMarkup, CallbackQuery
 
+from handlers.common import temp_text
 from handlers.menu import back_to_menu_button
 from keyboards.inline_buttons import inline_buttons, Answer
 from utils.DBManager import db_manager
@@ -13,9 +12,6 @@ from utils.Quest import QuestInfo
 from utils.create_answer import create_answer
 
 router = Router()
-
-with open("message_templates.json", "r") as f:
-    temp_text = json.load(f)
 
 
 def quest_text(quest_info: QuestInfo) -> str:
@@ -32,6 +28,9 @@ def quest_buttons(user_id: str, quest_id: str, list_type: str) -> InlineKeyboard
     if db_manager.can_continue(user_id, quest_id):
         answers.append(Answer(id=f"continue_quest_{quest_id}",
                               text="Продолжить квест"))
+    if db_manager.is_author(user_id, quest_id):
+        answers.append(Answer(id=f"delete_quest_{quest_id}",
+                              text="Удалить квест"))
     answers.append(Answer(id=(list_type if list_type else "quests_list"),
                           text="Вернуться к списку"))
     return inline_buttons(answers)
@@ -45,7 +44,7 @@ async def quest(input, state: FSMContext, quest_id: str):
         quest_info = db_manager.get_quest(quest_id).quest_info
     except ValueError:
         await create_answer(input,
-                            text=temp_text['wrong_quest_id'],
+                            text=temp_text['quest_id_error'],
                             reply_markup=back_to_menu_button())
     else:
         await create_answer(input,

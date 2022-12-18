@@ -64,7 +64,7 @@ class Quest:
             steps = [steps]
         steps_dict: Dict[str, Step] = dict()
         for step in steps:
-            answers = step['answers']
+            answers = step.get('answers', None)
             if answers:
                 answers = answers['answer']
                 if type(answers) is not list:
