@@ -32,7 +32,7 @@
                 <answer>
                     <text>Пройти в синюю дверь</text>
                     <next_step_id>blue_room_without_key</next_step_id>
-                    <visited><id>take_green_key</id> </visited>
+                    <visited><id>take_green_key</id></visited>
                 </answer>
                 <answer>
                     <text>Использовать зеленый ключ - пройти в зеленую дверь</text>

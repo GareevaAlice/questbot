@@ -1,7 +1,5 @@
 import asyncio
 import logging
-import shutil
-from warnings import filterwarnings
 
 from aiogram import Bot, Dispatcher
 from aiogram.dispatcher.fsm.storage.memory import MemoryStorage
