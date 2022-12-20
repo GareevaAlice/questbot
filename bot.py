@@ -10,13 +10,12 @@ from utils.DBManager import db_manager
 
 
 async def main():
-    db_manager.save_catalog_quests()
-
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
     )
 
+    db_manager.save_catalog_quests()
     bot = Bot(token=config.bot_token.get_secret_value())
     dp = Dispatcher(storage=MemoryStorage())
     handlers.setup(dp)

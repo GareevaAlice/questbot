@@ -1,6 +1,6 @@
 from lxml import etree
 
-schema_path = f'/app/default_schema.xsd'
+schema_path = f'default_schema.xsd'
 
 
 class XMLChecker:
